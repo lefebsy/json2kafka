@@ -1,0 +1,8 @@
+.vscode
+.vscode/settings.json
+obj
+bin
+out
+**/obj/
+**/bin/
+*.bak
