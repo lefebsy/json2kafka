@@ -6,14 +6,17 @@ using Json2Kafka.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 namespace Json2Kafka.BasicAuth
 {
     public class BasicAuthFilter : IAuthorizationFilter
     {
         private readonly string _realm;
-        public BasicAuthFilter(string realm)
+        private readonly IConfiguration _Configuration;
+        public BasicAuthFilter(string realm,IConfiguration Configuration)
         {
+            _Configuration = Configuration;
             _realm = realm;
             if (string.IsNullOrWhiteSpace(_realm))
             {
@@ -42,8 +45,10 @@ namespace Json2Kafka.BasicAuth
                         }
                     }
                 }
-
-                ReturnUnauthorizedResult(context);
+                if (bool.Parse( _Configuration["BasicAuthEnabled"] ))
+                {
+                    ReturnUnauthorizedResult(context);
+                }
             }
             catch (FormatException)
             {
