@@ -1,0 +1,3 @@
+tasks:
+  - init: dotnet restore
+    command: dotnet restore

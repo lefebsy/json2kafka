@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/lefebsy/json2kafka)
+
 # REST microService : Json to Kafka
 
 - Code : `dotNetcore v3.1 - linux alpine self-contained compiled` 
