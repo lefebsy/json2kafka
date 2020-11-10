@@ -6,12 +6,12 @@ mono: none
 dotnet: 3.1
 script:
 - dotnet restore && dotnet publish -c release -o app --runtime linux-x64 --self-contained
-  false /p:PublishReadyToRun=true /p:PublishReadyToRunShowWarnings=false
+  false /p:PublishReadyToRun=true /p:PublishReadyToRunShowWarnings=false && zip -r linux.zip app
 deploy:
   provider: releases
   api_key:
     secure: kGBRAoXvfzmzUd8w+/NOUMKlQ0yKhx1fZNggT9XSgtKIvTQNtAfDFh7pf1CtslNycnf7/MZ95SDlAcftokDrDQKHbQoNHqLoqUtTg+mZeauqIBKR+jqxKqSx4YhG7josplGYqOuSPtYlZNo2SpYxVVEoyihziUL8BCt7ENFvOKLmsoJSX3TVre1xYc5ARVsUcCKVfwuq7JdNmOcRXV1YuIcQjAfNEAvAHkdM3lnPr/+ZL06amtcLbg3/yboe4uw/nqhcNQMvzwGOh/sIWo0xjL011TSg78CpbEWAfuEUlrKwGIYYtzEHEkEcPldn8wnQnnTWi1u8nXJk1O+Egfv+VzP0NMp2UNxvXPkxGD/8s4TxY92bO/RiZUWC6Sq9h1XPC9qgDGLA2wdIRi4umyIexTu0Z/wHE607Hhe66TE++HODkDp0hhHGl1ltIuPJ6jGKsUNzsDhPqxQ6Zo4lYPx4LenDZuFZXrBPNg5NEH8F5Hboh/DqvMLEMiCB4QM0jQPAx3d2Yt0AXYgxjt3gNmTI8LnTz/EmgOtt/v23+V5RmIVNoTKdBo9kuYDDI6qdJlnxNW9vXyymjLVxk+GEfO6WQKX0O2OuTbo3fjGdHPoUWbjdYfNUItyonxwaccga1dLAU5AKh50UcaA+XGBhQL7LL0MJ1s5/GYJ/cpIb6jelMOg=
-  file: app/*
+  file: linux.zip
   on:
     repo: lefebsy/json2kafka
     tags: true
