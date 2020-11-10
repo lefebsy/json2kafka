@@ -1,15 +1,16 @@
 branches:
   except:
-  - /^untagged/
+  - "/^untagged/"
 language: csharp
 mono: none
 dotnet: 3.1
 script:
-- dotnet restore && dotnet publish -c release -o app --runtime linux-x64 --self-contained false /p:PublishReadyToRun=true /p:PublishReadyToRunShowWarnings=false
+- dotnet restore && dotnet publish -c release -o app --runtime linux-x64 --self-contained
+  false /p:PublishReadyToRun=true /p:PublishReadyToRunShowWarnings=false
 deploy:
   provider: releases
   api_key:
-    secure: Qs0rQTSl0EGhel9q5iQx6jPNxGmIhueYVR/nMeLcGs/ZHu0vS8r2/cfMDGIolSARTHiRIb94Ysr0gln5FkGiFgXp3Lo9oYZ7/K5t+6EjlNM4lGkg1eRppulxtv1SpcSCcSPlXbXEjnpXsJtajNpzbuu+QzjVEY/r5USzZDuQS8JnNaQh4vw+9QxuTtGUboX8m1rKAnVxAQX5vWM/xmusgQ/wM1Qs0+kJolNWM0d7YrMCI69ZaxR0DkDsFs/XHCRFrApEIAo3zYdW4N42Hdu2IH6rVomfCgvfmXhOKSGKY4IQ7DwHWlxGr8y4HMsM/Te78aOgsxjZlYNPw7JksQUcdxb1fFeVq5Gyqms2BhQxDkopqhHuiApnjtqOkxJkof0cT1meqc+87TvXNv4czaEI/0k7EzQbgGQ9mLLhOplbI6XoG7kMYIphombBI41FsQyFKg8ip+E23kyor6JcWoWJcO/GXI9u8d1cKF5A/2iueZnSYIY3J3Bd8xMt1318qR2LublyO61E1ebPw+STMU4TK+Vtw/DpUiOqApckwsW//SDHpOSYhn1IQ8CqsIjrgbL0LwfXZie7r0T+sND2JF4M8r4f6jTUy7P1M7isxOysGNytJrX/SjyamvHcqvKeUNII3FRYUQ7KRQPMxD84UXaG3Q4xTgs5knexO4gq1RsPO/k=
+    secure: yBTpXro3D1zjn3x09190icSt9ViOPwOauxVCySlOjsUJuRVYvejYsZD1jpFbAYvcIj+9/p6AfUfQCDG5N44bdt0KBV1uIRuFgZtLBv8/mYCvqXKpBITLqkyH8Wq+jv6TjgfOyiFTMGnlQBvbZbNUFIMI6CsBm/NDne7bPpob1PfQJllVvbP7mogFgeoq/cPidkjCfY0SxxqLrVyW/l6GOSpm/3BhToF5O6zYBOGmapg6/d7DFUebc0BTu0ucUqhW4HCFipyVUuYGNMTFuRbXJwEVxAxh3yKht7SustmeKV39Fgq5JcVVkPvIEG5zuvJ144q6a0DRjl759Q9nEJKb2NR5EMrzvTUms02yLIdnN+GhOqzz/QH3fix9jWmnzlWU+3mP7oLxyCGRhUt/81QCiDEb6pJ5OOenOs39R+lm9M9tZJKMWPThVfip5nhQL0l3MvWbUD+yN5ZtPRS7tdnzbvbHD8y17ntOSkjTvM5BGAImj9iJMd6bfyE/SysyvjLCtYF/yXRIZKYRL/4LBa+fHiwtvwDDm7JzsHkcF/vsR3uU44N0vjQgD6vHQ1y95toQ4bR/1kg6z03gJdtruAr1sFWCswjPgTL9sn+uB9ng00703VQ6rCpPYij5x71Q8NN1uo84OujV389E4YWE1jinVm53WDa5l9D9jgpwnlf+yKw=
   file: app/*
   on:
     repo: lefebsy/json2kafka
