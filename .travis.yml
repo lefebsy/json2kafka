@@ -12,7 +12,7 @@ deploy:
   provider: releases
   api_key:
     secure: bRrejMDnb9PcyNMoGcYAEPp8fvoccIR/nQTsIrfOJX+UEPKxaLhJL/N2dad7OkuUfLNXXlk3pXzKgbN4xyikt9VFTDoaT3BfYJx3os+DB3iNBhxEKPvzRznyeDh1aHAnZ/FQWLWAmBVsx+qiLXjSqCZMdUiqTAaivI7EuoXcRvYXQ6paup0CADX7gJa5QsVvzWgfxwWqD92/ZnBNMEIPnTiyDvImrtSEvn4g5tQYtIVVwVnWVdqTAXdTJf5IAFYJs6bC9I1CnaAWc84SY23N/gCyBM+dyx0cVYdpqTk5jsAenuuN1BGJnZtF3O7wtJwUQQNpxLqUIhceKs1dRFJDqgiBVAd4KW1uXghZDIUw3BlUp+swW/H/n4JWx/mquBX/55SPfJ91fZV70MvVqWiFdBMo30I03GOuvrmd2+eO1zd0Nma1cwakrUobBHwAWfeOLkCH4tZ0JKWufSF/bk9ex/cZSdZyY2zX10Tsc+XWp+n7CJQH0lAaJt540JSfI2xZsb2kQFdUTmx+3ehV/pqj3Ut2OlgbwtgAwMrgmvjN6BQFr/JQ4oUsHjbXEzYdrSS8+RpqF4j5AinWSjqF/lZx2vq/aINESjB493J4Zsb8P317qiSvh3brRvrqvhoMjHk8G+Cb8ZkW0WbWkoBK6uQCT807OaBQbLmgJE5iC5n5Sps=
-  file: linux.zip
+  file: app/Json2Kafka.dll
   on:
     repo: lefebsy/json2kafka
     tags: true
