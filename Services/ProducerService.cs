@@ -34,6 +34,12 @@ namespace Json2Kafka.Services
                     EnableSslCertificateVerification = bool.Parse( Configuration["EnableSslCertificateVerification"] ),
                     EnableIdempotence = bool.Parse( Configuration["EnableIdempotence"] )
                 };
+                
+                if (bool.Parse( Configuration["EnableIdempotence"]) == true) {
+                    _ProducerConfig.Acks = Acks.All;
+                    _ProducerConfig.MaxInFlight = 5;
+                    _ProducerConfig.MessageSendMaxRetries = 10000000;
+                }
                 // configs optionnelles
                 if ("" != Configuration["SaslPassword"]) _ProducerConfig.SaslPassword = Configuration["SaslPassword"];
                 if ("" != Configuration["SaslUsername"]) _ProducerConfig.SaslUsername = Configuration["SaslUsername"];
