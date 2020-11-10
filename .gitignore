@@ -4,4 +4,5 @@ bin
 out
 **/obj/
 **/bin/
+**/app/
 *.bak
