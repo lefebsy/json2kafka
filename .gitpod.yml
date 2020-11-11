@@ -1,7 +1,7 @@
 image: gitpod/workspace-dotnet
 tasks:
   - init: dotnet restore
-    command: dotnet restore
+    command: dotnet restore && dotnet watch --project . run --urls "http://0.0.0.0:5000;http://0.0.0.0:5001"
 vscode:
   extensions:
     - ms-azuretools.vscode-docker@1.5.0:sXMeJMbTgWECxAWvyhiC5Q==
