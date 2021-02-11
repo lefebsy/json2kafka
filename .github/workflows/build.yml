@@ -44,5 +44,5 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"lefebsy_json2kafka" /o:"lefebsy" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet restore --runtime alpine-x64
-          dotnet publish -c release -o /app --runtime alpine-x64 --self-contained true /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishReady
+          dotnet publish -c release -o /app --runtime alpine-x64 --self-contained true /p:PublishTrimmed=true /p:PublishReadyToRun=true
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
