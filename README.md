@@ -15,6 +15,7 @@
 - Liveness and readiness probes ready `/health`
 - Can publish on a Kafka with TLS and Sasl username/password
 - The REST API can be exposed with a simple basicAuth login/password
+- Logs `JSON formated` compliant with `kubernetes annotations elastic.co` to be parsed and displayed in Kibana
 
 # How to use
 
