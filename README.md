@@ -5,7 +5,7 @@
 
 # REST microService : Json to Kafka
 
-- Code : `dotNetcore v3.1 - linux alpine self-contained compiled` 
+- Code : `dotNetcore v5.0 - linux alpine self-contained compiled` 
 - Docker images : <https://hub.docker.com/r/lefebsy/json2kafka/tags>
 - Memory needed : ~ 30Mo 
 
