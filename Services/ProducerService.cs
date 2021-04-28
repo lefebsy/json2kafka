@@ -58,8 +58,7 @@ namespace Json2Kafka.Services
             {
                 _logger.LogInformation("Sending {json}",msg);
                 var deliveryResult = await _Producer.ProduceAsync(_Topic, new Message<Null, string> { Value=msg.ToString() });
-                Console.WriteLine($"{{ \"TopicPartitionOffset\":\"{deliveryResult.TopicPartitionOffset}\",\"Kafka_delivered\":{deliveryResult.Value} }}");
-                _logger.LogTrace("Kafka {DeliviveryResult}",deliveryResult);
+                Console.WriteLine($"{{ \"TopicPartitionOffset\":\"{deliveryResult.TopicPartitionOffset}\",\"Kafka_delivered\":{deliveryResult.Value} }}");        
                 return deliveryResult;
             }
             catch (ProduceException<Null, string> e)
