@@ -16,10 +16,10 @@ namespace Json2Kafka.Controllers
     {
 
         private ProducerService _Producer;
-
+        
         // Constructeur du controller de l'API, instanciation du producer Kafka
-        public MsgController(IConfiguration Configuration) {
-            _Producer = ProducerService.GetInstance(Configuration);
+        public MsgController(ILogger<Program> logger,IConfiguration Configuration) {
+            _Producer = ProducerService.GetInstance(logger, Configuration);
         }
 
         // GET: / or /api/[controller] 
@@ -45,7 +45,7 @@ namespace Json2Kafka.Controllers
         public async Task<ActionResult<Object>> PostMessage(Object message)
         {
             var deliveryResult = await _Producer.ProduceAwait(message); // send the message to kafka
-            return Created("Kafka", deliveryResult); // return http 201 created to the requester with a DeliveryResult or ProduceException in case of problem
+            return Created("KafkaDeliveryResult", deliveryResult); // return http 201 created to the requester with a DeliveryResult or ProduceException in case of problem
         }
     }
 }

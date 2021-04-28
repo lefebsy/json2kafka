@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace Json2Kafka.Services
 {
@@ -18,9 +19,10 @@ namespace Json2Kafka.Services
         
         // Constructeur du singleton et de la gestion de l'obtention de son instance (paramètres interdits dans le constructeur, donc Setup depuis une méthode séparée)
         private static readonly ProducerService _ProducerServiceInstance = new ProducerService();
-        public static ProducerService GetInstance(IConfiguration Configuration) {
+        public static ProducerService GetInstance(ILogger<Program> logger, IConfiguration Configuration) {
             if (!_SetupDone)
             {
+                _logger = logger;
                 // création de la configuration Kafka à partir des infos récupèrées
                 // dans appsettings.json qui peuvent être surchargées par
                 // les variables d'environements pour tourner en container
@@ -29,17 +31,12 @@ namespace Json2Kafka.Services
                 _Topic = Configuration["Topic"];            
                 _ProducerConfig = new ProducerConfig {
                     ClientId = Configuration["ClientId"],
-                    CompressionType = CompressionType.Snappy, //Compression active par défaut, faible charge CPU et 0.5x de traffic et empreinte stockage sur kafka
+                    CompressionType = CompressionType.Gzip, //Compression active par défaut, faible charge CPU et 0.5x de traffic et empreinte stockage sur kafka
                     BootstrapServers = Configuration["BootstrapServers"],
                     EnableSslCertificateVerification = bool.Parse( Configuration["EnableSslCertificateVerification"] ),
                     EnableIdempotence = bool.Parse( Configuration["EnableIdempotence"] )
                 };
                 
-                if (bool.Parse( Configuration["EnableIdempotence"]) == true) {
-                    _ProducerConfig.Acks = Acks.All;
-                    _ProducerConfig.MaxInFlight = 5;
-                    _ProducerConfig.MessageSendMaxRetries = 10000000;
-                }
                 // configs optionnelles
                 if ("" != Configuration["SaslPassword"]) _ProducerConfig.SaslPassword = Configuration["SaslPassword"];
                 if ("" != Configuration["SaslUsername"]) _ProducerConfig.SaslUsername = Configuration["SaslUsername"];
@@ -48,7 +45,6 @@ namespace Json2Kafka.Services
                 if ("" != Configuration["SecurityProtocol"]) _ProducerConfig.SecurityProtocol = (SecurityProtocol)int.Parse(Configuration["SecurityProtocol"]);
 
                 _Producer = new ProducerBuilder<Null, string>(_ProducerConfig).Build();
-                _logger = LoggerFactory.Create(builder => builder.AddConsole().AddConfiguration(Configuration.GetSection("Logging"))).CreateLogger("Json2Kafka.services.ProducerService");
                 _SetupDone = true;
             }
 
@@ -60,43 +56,18 @@ namespace Json2Kafka.Services
         {
             try
             {
-                _logger.LogInformation($"Sending message to producer [{msg}]");
-                return await _Producer.ProduceAsync(_Topic, new Message<Null, string> { Value=msg.ToString() });
+                _logger.LogInformation("Sending {json}",msg);
+                var deliveryResult = await _Producer.ProduceAsync(_Topic, new Message<Null, string> { Value=msg.ToString() });
+                Console.WriteLine($"{{ \"TopicPartitionOffset\":\"{deliveryResult.TopicPartitionOffset}\",\"Kafka_delivered\":{deliveryResult.Value} }}");
+                _logger.LogTrace("Kafka {DeliviveryResult}",deliveryResult);
+                return deliveryResult;
             }
             catch (ProduceException<Null, string> e)
             {
-                //Console.WriteLine($"Delivery failed: {e.Error.Reason}");
                 _logger.LogError($"Delivery failed: {e.Error.Reason}");
                 return e;
             }
         } 
-        // méthode en cours de test
-        private void Produce(object msg)
-        {
-            Action<DeliveryReport<Null, string>> handler = r => 
-                Console.WriteLine(!r.Error.IsError
-                    ? $"Delivered message to {r.TopicPartitionOffset}"
-                    : $"Delivery Error: {r.Error.Reason}");
-
-            _Producer.Produce(_Topic, new Message<Null, string> { Value = msg.ToString() }, handler);
-            
-            // wait for up to 10 seconds for any inflight messages to be delivered.
-            _Producer.Flush(TimeSpan.FromSeconds(10));
-            
-        }
-        // méthode en cours de test
-        private async Task ProduceAsync(object msg)
-        {
-            try
-            {
-                var dr = await _Producer.ProduceAsync(_Topic, new Message<Null, string> { Value=msg.ToString() });
-                Console.WriteLine($"Delivered '{dr.Value}' to '{dr.TopicPartitionOffset}'");
-            }
-            catch (ProduceException<Null, string> e)
-            {
-                Console.WriteLine($"Delivery failed: {e.Error.Reason}");
-            }            
-        }
 
     }
 

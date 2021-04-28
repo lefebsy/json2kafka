@@ -10,10 +10,10 @@ namespace Json2Kafka.Services
 
     public class UserService : IUserService
     {
-        private readonly ILogger<UserService> _logger;
+        private readonly ILogger<Program> _logger;
         private readonly IConfiguration _Configuration;
         // inject database for user validation
-        public UserService(ILogger<UserService> logger,IConfiguration Configuration)
+        public UserService(ILogger<Program> logger,IConfiguration Configuration)
         {
             _logger = logger;
             _Configuration = Configuration;
