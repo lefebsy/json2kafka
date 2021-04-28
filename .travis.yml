@@ -3,7 +3,7 @@ branches:
   - "/^untagged/"
 language: csharp
 mono: none
-dotnet: 3.1
+dotnet: 5.0
 script:
 - dotnet restore && dotnet publish -c release -o app --runtime linux-x64 --self-contained
   false /p:PublishReadyToRun=true /p:PublishReadyToRunShowWarnings=false && zip -r
