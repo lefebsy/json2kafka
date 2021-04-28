@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/lefebsy/json2kafka.svg?branch=master)](https://travis-ci.com/lefebsy/json2kafka)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/lefebsy/json2kafka)
+![Docker Image Version (latest semver)](https://img.shields.io/docker/v/lefebsy/json2kafka?label=dockerhub)
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/lefebsy/json2kafka)
 
 # REST microService : Json to Kafka
