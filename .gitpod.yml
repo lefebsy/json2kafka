@@ -14,9 +14,7 @@ tasks:
     name: Kafka Server
 vscode:
   extensions:
-    - ms-azuretools.vscode-docker@1.5.0:sXMeJMbTgWECxAWvyhiC5Q==
     - ms-vscode.csharp@1.21.12:kw8SkO8+aVTSFug281WfQQ==
 ports:
   - port: 5001
     onOpen: open-preview
-#dotnet run --urls http://0.0.0.0:5001
