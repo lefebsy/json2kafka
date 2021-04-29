@@ -2,6 +2,7 @@
 obj
 bin
 out
+**/k/
 **/obj/
 **/bin/
 **/app/

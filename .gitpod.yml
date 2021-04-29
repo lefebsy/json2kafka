@@ -2,9 +2,21 @@ image: gitpod/workspace-dotnet
 tasks:
   - init: dotnet restore
     command: dotnet restore && dotnet watch --project . run --urls "http://0.0.0.0:5000;http://0.0.0.0:5001"
+    name: Debug-watch
+  - command: |
+      curl -o kafka.tgz https://downloads.apache.org/kafka/2.8.0/kafka_2.12-2.8.0.tgz \
+      && tar -xvf kafka.tgz \
+      && rm kafka.tgz \
+      && mv kafka_* k \
+      && cd k \
+      && bin/zookeeper-server-start.sh -daemon config/zookeeper.properties \
+      && bin/kafka-server-start.sh config/server.properties &
+    name: Kafka Server
 vscode:
   extensions:
     - ms-azuretools.vscode-docker@1.5.0:sXMeJMbTgWECxAWvyhiC5Q==
     - ms-vscode.csharp@1.21.12:kw8SkO8+aVTSFug281WfQQ==
-
+ports:
+  - port: 5001
+    onOpen: open-preview
 #dotnet run --urls http://0.0.0.0:5001
