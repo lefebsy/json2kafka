@@ -16,7 +16,7 @@
 - Can publish on a Kafka with TLS and Sasl username/password
 - The REST API can be exposed with a simple basicAuth login/password
 - Logs `JSON formated` compliant with `kubernetes annotations elastic.co` to be parsed and displayed in Kibana
-
+https://5001-violet-aphid-fbqy3u2p.ws-eu04.gitpod.io
 # How to use
 
 - Method : `POST`
@@ -25,6 +25,8 @@
 - Format : `UTF-8`
 - Body : `Json document`
 - [BasicAuth] : `username and password header`
+
+Example : `curl -d '{"key1":"value1", "key2":"value2"}' -u admin:admin -H "Content-Type: application/json" -X POST https://host-xyz.gitpod.io/api/msg`
 
 # Configuration
 - kafka : [read the service settings](https://github.com/lefebsy/json2kafka/blob/master/appsettings.json)
