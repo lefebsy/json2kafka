@@ -44,7 +44,6 @@ namespace Json2Kafka.Controllers
         [BasicAuth("thisServiceNotKafka")] 
         public async Task<ActionResult<Object>> PostMessage(Object message)
         {
-            Console.WriteLine("test debug à chaud");
             var deliveryResult = await _Producer.ProduceAwait(message); // send the message to kafka
             return Created("KafkaDeliveryResult", deliveryResult); // return http 201 created to the requester with a DeliveryResult or ProduceException in case of problem
         }
