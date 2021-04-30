@@ -1,0 +1,145 @@
+# Kube deployment example
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: j2k
+  labels:
+    app: j2k
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+     app: j2k
+  template:
+    metadata:
+      annotations:
+        co.elastic.logs/json.add_error_key: "true"
+        co.elastic.logs/json.keys_under_root: "false"
+      labels:
+        app: j2k
+    spec:
+      imagePullSecrets:
+      - name: project-registries
+      containers:
+      - name: json2kafka
+        image: lefebsy/json2kafka:v1.1.0
+        imagePullPolicy: Always
+        env:
+          - name: BasicAuthEnabled
+            value: "true"
+          - name: BasicAuthLogin
+            value: test
+          - name: BasicAuthPassword
+            value: d3m0-Secr3t
+          - name: BootstrapServers
+            value: broker-1:9092, broker-2:9092, broker-39092
+          - name: Topic
+            value: test
+          - name: SecurityProtocol
+            value: "2"
+          - name: SaslMechanism
+            value: "1"
+          - name: SaslUsername
+            valueFrom:
+              secretKeyRef:
+                name: kafka-creds-kube-secret
+                key: SaslUsername
+          - name: SaslPassword
+            valueFrom:
+              secretKeyRef:
+                name: kafka-creds-kube-secret
+                key: SaslPassword
+          - name: EnableIdempotence
+            value: "true"
+        resources:
+          limits:
+            memory: "60Mi"
+          requests:
+            cpu: "5m"
+            memory: "60Mi"
+        ports:
+        - containerPort: 8080
+          name: http
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 20
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 120
+          periodSeconds: 20
+
+---
+# Kube secret definition here with kafka credentials
+
+
+---
+# https://kubernetes.io/fr/docs/concepts/services-networking/service/#d%c3%a9finition-dun-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: j2k
+  labels:
+    app: j2k
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: j2k
+
+
+---
+# https://kubernetes.io/fr/docs/concepts/services-networking/ingress/#quest-ce-quun-ingress-
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: j2k
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: "j2k.k8s.caas.ca-sa.gca"
+      http:
+        paths:
+          - backend:
+              serviceName: j2k
+              servicePort: http
+  tls:
+    - hosts:
+        - "j2k.k8s.caas.ca-sa.gca"
+
+---
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: netpol-j2k
+spec:
+  podSelector:
+    matchLabels:
+      app: j2k
+  policyTypes:
+    - Egress
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+        - podSelector:
+            matchLabels: {}
+  egress:
+    - ports:
+        - port: 443
+          protocol: TCP
+    - to:
+        - podSelector: {}
+        - namespaceSelector: {}
+        - ipBlock:
+            cidr: 1.2.3.4/24 #Kafka cluster range

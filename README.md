@@ -31,6 +31,10 @@ Example : `curl -d '{"key1":"value1", "key2":"value2"}' -u admin:admin -H "Conte
 # Configuration
 - kafka : [read the service settings](https://github.com/lefebsy/json2kafka/blob/master/appsettings.json)
 
+# Kubernetes deployement
+
+See [manifest.yml](https://github.com/lefebsy/json2kafka/blob/master/manifest.yml) for a basic example
+
 # It is not !
 - There is NO authentication impersonation, REST credentials are not played as Kafka credentials
 - This code is not fully tested, it is a very simple project to test Kafka in dotnetCore microservice
