@@ -26,7 +26,17 @@ https://5001-violet-aphid-fbqy3u2p.ws-eu04.gitpod.io
 - Body : `Json document`
 - [BasicAuth] : `username and password header`
 
-Example : `curl -d '{"key1":"value1", "key2":"value2"}' -u admin:admin -H "Content-Type: application/json" -X POST https://host-xyz.gitpod.io/api/msg`
+Example :
+```BASH
+curl -d '{"key1":"value1", "key2":"value2"}' -u admin:admin -H "Content-Type: application/json" -X POST https://5001-host-xyz.gitpod.io/api/msg`
+```
+
+From Gitpod terminal :
+```BASH
+J2K_URL=$(gp url 5001)
+curl -d '{"key1":"value1", "key2":"value2"}' -u admin:admin -H "Content-Type: application/json" -X POST $J2K_URL/api/msg
+```
+
 
 # Configuration
 - kafka : [read the service settings](https://github.com/lefebsy/json2kafka/blob/master/appsettings.json)
