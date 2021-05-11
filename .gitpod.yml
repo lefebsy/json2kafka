@@ -1,7 +1,8 @@
 image: gitpod/workspace-dotnet
 tasks:
   - init: dotnet restore
-    command: dotnet restore && dotnet watch --project . run --urls "http://0.0.0.0:5000;http://0.0.0.0:5001"
+    command: |
+      dotnet restore && dotnet watch --project . run --urls "http://0.0.0.0:5000;http://0.0.0.0:5001"
     name: Debug-watch
   - command: |
       curl -o kafka.tgz https://downloads.apache.org/kafka/2.8.0/kafka_2.12-2.8.0.tgz
@@ -15,7 +16,7 @@ tasks:
       k/bin/kafka-console-consumer.sh --topic monTopic --from-beginning --bootstrap-server localhost:9092 &
     name: KafkaConsumer
   - command: |
-      sleep 20
+      sleep 15
       J2K_URL=$(gp url 5001)
       curl -u admin:admin -H "Content-Type: application/json" -X POST $J2K_URL/api/msg -d '{"key1":"value1", "key2":"value2"}'
     name: J2KConsole
