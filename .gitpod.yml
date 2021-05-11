@@ -17,7 +17,7 @@ tasks:
   - command: |
       sleep 20
       J2K_URL=$(gp url 5001)
-      curl -d '{"key1":"value1", "key2":"value2"}' -u admin:admin -H "Content-Type: application/json" -X POST $J2K_URL/api/msg
+      curl -u admin:admin -H "Content-Type: application/json" -X POST $J2K_URL/api/msg -d '{"key1":"value1", "key2":"value2"}'
     name: J2KConsole
 vscode:
   extensions:
@@ -25,5 +25,10 @@ vscode:
 ports:
   - port: 2000-10999
     onOpen: ignore
+    visibility: private
+  - port: 5000
+    onOpen: ignore
+    visibility: private
   - port: 5001
     onOpen: open-preview
+    visibility: public
