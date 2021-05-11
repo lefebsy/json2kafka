@@ -13,8 +13,14 @@ tasks:
       && bin/kafka-server-start.sh config/server.properties &
     name: KafkaServer
   - command: |
+      sleep 15 \
       k/bin/kafka-console-consumer.sh --topic monTopic --from-beginning --bootstrap-server localhost:9092 &
     name: KafkaConsumer
+  - command: |
+      sleep 20 \
+      J2K_URL=$(gp url 5001) \
+      curl -d '{"key1":"value1", "key2":"value2"}' -u admin:admin -H "Content-Type: application/json" -X POST $J2K_URL/api/msg
+    name: J2KConsole
 vscode:
   extensions:
     - ms-vscode.csharp@1.21.12:kw8SkO8+aVTSFug281WfQQ==
