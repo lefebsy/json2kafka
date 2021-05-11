@@ -44,6 +44,7 @@ curl -d '{"key1":"value1", "key2":"value2"}' -u admin:admin -H "Content-Type: ap
 # Kubernetes deployement
 
 See [manifest.yml](https://github.com/lefebsy/json2kafka/blob/master/manifest.yml) for a basic example
+ <iframe src="https://github.com/lefebsy/json2kafka/blob/master/manifest.yml" title="manifest"></iframe> 
 
 # It is not !
 - There is NO authentication impersonation, REST credentials are not played as Kafka credentials

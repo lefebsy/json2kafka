@@ -11,7 +11,10 @@ tasks:
       && cd k \
       && bin/zookeeper-server-start.sh -daemon config/zookeeper.properties \
       && bin/kafka-server-start.sh config/server.properties &
-    name: Kafka Server
+    name: KafkaServer
+  - command: |
+      k/bin/kafka-console-consumer.sh --topic monTopic --from-beginning --bootstrap-server localhost:9092 &
+    name: KafkaConsumer
 vscode:
   extensions:
     - ms-vscode.csharp@1.21.12:kw8SkO8+aVTSFug281WfQQ==
