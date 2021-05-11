@@ -9,20 +9,17 @@ tasks:
       tar -xvf kafka.tgz && rm kafka.tgz
       mv kafka_* k && cd k
       bin/zookeeper-server-start.sh -daemon config/zookeeper.properties
-      bin/kafka-server-start.sh config/server.properties &
+      bin/kafka-server-start.sh config/server.properties
     name: KafkaServer
   - command: |
       sleep 15
-      k/bin/kafka-console-consumer.sh --topic monTopic --from-beginning --bootstrap-server localhost:9092 &
+      k/bin/kafka-console-consumer.sh --topic monTopic --from-beginning --bootstrap-server localhost:9092
     name: KafkaConsumer
   - command: |
       sleep 15
       J2K_URL=$(gp url 5001)
       curl -u admin:admin -H "Content-Type: application/json" -X POST $J2K_URL/api/msg -d '{"key1":"value1", "key2":"value2"}'
     name: J2KConsole
-vscode:
-  extensions:
-    - ms-vscode.csharp@1.21.12:kw8SkO8+aVTSFug281WfQQ==
 ports:
   - port: 2000-10999
     onOpen: ignore
@@ -30,6 +27,12 @@ ports:
   - port: 5000
     onOpen: ignore
     visibility: private
+  - port: 9092
+    onOpen: ignore
+    visibility: private
   - port: 5001
     onOpen: open-preview
     visibility: public
+vscode:
+  extensions:
+    - muhammad-sammy.csharp@1.23.11:abbce152176cb417d759880513465a5b
