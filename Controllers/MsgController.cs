@@ -25,7 +25,7 @@ namespace Json2Kafka.Controllers
         // GET: / or /api/[controller] 
         // Ne fait rien à part afficher une info sur la méthode POST à utiliser
         [HttpGet]
-        public ActionResult<Object> GetMessage() => Content("Please use POST method on /api/msg - UTF8 JSON object mandatory\n\nExample : curl -d '{\"key1\":\"value1\", \"key2\":\"value2\"}' -u admin:admin -H \"Content-Type: application/json\" -X POST https://host-xyz.gitpod.io/api/msg");
+        public ActionResult<Object> GetMessage() => Content("Please use POST method on /api/msg - UTF8 JSON object mandatory\n\nExample : curl -u admin:admin -H \"Content-Type: application/json\" -X POST https://5001-host-xyz.gitpod.io/api/msg -d '{\"key1\":\"value1\", \"key2\":\"value2\"}'");
 
 
 

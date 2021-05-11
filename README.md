@@ -28,13 +28,13 @@ https://5001-violet-aphid-fbqy3u2p.ws-eu04.gitpod.io
 
 Example :
 ```BASH
-curl -d '{"key1":"value1", "key2":"value2"}' -u admin:admin -H "Content-Type: application/json" -X POST https://5001-host-xyz.gitpod.io/api/msg`
+curl -u admin:admin -H "Content-Type: application/json" -X POST https://5001-host-xyz.gitpod.io/api/msg -d '{"key1":"value1", "key2":"value2"}'
 ```
 
 From Gitpod terminal :
 ```BASH
 J2K_URL=$(gp url 5001)
-curl -d '{"key1":"value1", "key2":"value2"}' -u admin:admin -H "Content-Type: application/json" -X POST $J2K_URL/api/msg
+curl -u admin:admin -H "Content-Type: application/json" -X POST $J2K_URL/api/msg -d '{"key1":"value1", "key2":"value2"}'
 ```
 
 
