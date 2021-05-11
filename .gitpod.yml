@@ -19,7 +19,7 @@ tasks:
       sleep 15
       J2K_URL=$(gp url 5001)
       curl -u admin:admin -H "Content-Type: application/json" -X POST $J2K_URL/api/msg -d '{"key1":"value1", "key2":"value2"}'
-    name: J2KConsole
+    name: J2KClient
 ports:
   - port: 2000-10999
     onOpen: ignore
