@@ -19,8 +19,6 @@ spec:
       labels:
         app: j2k
     spec:
-      imagePullSecrets:
-      - name: project-registries
       containers:
       - name: json2kafka
         image: lefebsy/json2kafka:v1.1.0
